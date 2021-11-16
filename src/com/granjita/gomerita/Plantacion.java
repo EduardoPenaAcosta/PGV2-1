@@ -30,27 +30,35 @@ public class Plantacion extends Thread {
         super.run();
         try {
             int randomAccessArrayPlants = ((int) ( Math.random() * plantsGROWED.size()));
-            double TIMINGROWING = Math.random() * 900;
+            double TIMINGROWING = 12;
 
             if(this.limitPlants > maxPlantsGROW){
                 System.out.println("Es imposible plantar más de 5000 unidades.");
             }else if(this.limitPlants > plantsGROWING){
                 System.out.println("No se pueden consumir más plantas que las plantadas.");
             }else{
-                for (int i = 0; i < this.plantsGROWING; i++) {
-                    int randomAccess = ((int) (Math.random() * 15));
+                for(int i = 0; i < this.producers; i++){
+                    System.out.println("El productor " + i + " ha plantado las siguientes verduras: ");
+                    for (int h = 0; h < this.plantsGROWING; h++) {
+                        int randomAccess = ((int) (Math.random() * 15));
+                        TIMINGROWING = Math.random() * 900;
 
-                    sleep((long) TIMINGROWING);
-                    System.out.println("La planta: " + this.plants[randomAccess] + " ha crecido con un tiempo de: " + TIMINGROWING + " minutos.");
-                    plantsGROWED.add(this.plants[randomAccess]);
+                        sleep((long) TIMINGROWING);
+                        System.out.println("La planta: " + this.plants[randomAccess] + " ha crecido con un tiempo de: " + TIMINGROWING + " minutos.");
+                        plantsGROWED.add(this.plants[randomAccess]);
+                    }
+
+                    System.out.println("Y han sido consumidas:");
+                    for(int x = 0; x < this.limitPlants;x++){
+
+                        TIMINGROWING = Math.random() * 900;
+                        int randomClient = (int)(Math.random()*this.clients);
+                        sleep((long) TIMINGROWING);
+                        System.out.println("Se ha consumido la verdura: " + plantsGROWED.get(randomAccessArrayPlants) + " por el cliente " + randomClient);
+                        plantsGROWED.remove(randomAccessArrayPlants);
+                    }
                 }
 
-                for(int i = 0; i < this.limitPlants;i++){
-
-                    sleep((long) TIMINGROWING);
-                    System.out.println("Se ha consumido la verdura: " + plantsGROWED.get(randomAccessArrayPlants) + " por uno de los clientes...");
-                    plantsGROWED.remove(randomAccessArrayPlants);
-                }
 
             }
         } catch (Exception e) {
